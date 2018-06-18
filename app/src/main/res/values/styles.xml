@@ -1,0 +1,108 @@
+<resources>
+    <color name="AccentColor">#cc0000</color>
+    <color name="PopupColor">@color/AccentColor</color>
+    <color name="PopupTextColor">#ffffff</color>
+    <color name="ButtonTextColor">#ffffff</color>
+    <color name="BlurbColor">#a0a0a0</color>
+    <color name="SignOutButtonBackground">#e0e0e0</color>
+    <color name="SignOutButtonTextColor">#404040</color>
+
+    <style name="Ticket_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:visibility">invisible</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingStart">6dp</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:layout_alignParentStart">true</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+    <style name="Blurb">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/BlurbColor</item>
+    </style>
+    <style name="LLScreen" parent="@style/GameScreen">
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">30dp</item>
+    </style>
+    <style name="GameScreen">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:visibility">gone</item>
+    </style>
+    <style name="InvPopup" parent="@style/LLScreen">
+        <item name="android:background">@color/black</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_gravity">top|right</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="InvPopupText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/PopupTextColor</item>
+        <item name="android:text">@string/inv_popup_text</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="InvPopupButton" parent="@style/GameButton">
+        <item name="android:background">@color/ButtonTextColor</item>
+        <item name="android:textColor">@color/AccentColor</item>
+    </style>
+    <style name="GameButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/AccentColor</item>
+        <item name="android:textColor">@color/ButtonTextColor</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.Settings" parent="AppTheme">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="displayOptions">showHome|showTitle|homeAsUp</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="CardViewStyle">
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginEnd">@dimen/card_view_margin</item>
+        <item name="android:layout_marginStart">@dimen/card_view_margin</item>
+        <item name="cardCornerRadius">@dimen/card_view_card_corner_radius</item>
+        <item name="cardElevation">@dimen/card_view_card_elevation</item>
+        <item name="cardPreventCornerOverlap">false</item>
+    </style>
+
+    <style name="BaseButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:layout_width">@dimen/button_width</item>
+        <item name="android:layout_height">@dimen/button_height</item>
+    </style>
+
+    <style name="ButtonStyle" parent="BaseButtonStyle">
+        <item name="android:background">@color/red</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_gravity">bottom|end</item>
+    </style>
+
+</resources>

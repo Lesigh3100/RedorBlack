@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menu_report_text"
+        android:title="@string/report_for"
+        app:showAsAction="ifRoom|withText"
+        android:enabled="false"
+        />
+
+    <item android:id="@+id/menu_abusive"
+        android:title="@string/abusive"
+        app:showAsAction="ifRoom|withText"/>
+
+    <item
+        android:id="@+id/menu_nudity"
+        android:title="@string/nudity"
+        app:showAsAction="always|withText"  />
+</menu>

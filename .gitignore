@@ -66,10 +66,14 @@ fastlane/readme.md
 
 app/build.gradle
 app/src/main/res/drawable
+app/src/main/res/drawable-v24
+app/src/main/res/mipmap-hdpi
+app/src/main/res/mipmap-anydpi-v26
 app/src/main/res/raw
-app/src/main/res/values/apikeys
-app/src/main/res/values/ids
-app/src/main/res/values/strings
-app/src/main/res/values/productlist
+app/src/main/res/values/apikeys.xml
+app/src/main/res/values/ids.xml
+app/src/main/res/values/strings.xml
+app/src/main/res/values/productlist.xml
 app/src/main/java/com/kevin/android/redorblack/billing
-app/src/main/java/com/kevin/android/redorblack/constants
+app/src/main/java/com/kevin/android/redorblack/constants/FirebaseConstants.java
+app\src\main\java\com\kevin\android\redorblack\firebasemethods\DataRetrieval.java

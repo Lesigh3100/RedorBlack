@@ -77,3 +77,5 @@ app/src/main/res/values/productlist.xml
 app/src/main/java/com/kevin/android/redorblack/billing
 app/src/main/java/com/kevin/android/redorblack/constants/FirebaseConstants.java
 app\src\main\java\com\kevin\android\redorblack\firebasemethods\DataRetrieval.java
+app\src\main\java\com\kevin\android\redorblack\SavedMethods.java
+app\src\main\java\com\kevin\android\redorblack\firebasemethods\DataRetrieval.java

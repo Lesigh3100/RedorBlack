@@ -1,16 +1,14 @@
 package com.kevin.android.redorblack;
 
 
-import android.support.annotation.Nullable;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
-import com.kevin.android.redorblack.GameLogic.MessageReceiver;
-import com.kevin.android.redorblack.GameLogic.MessagedReceivedListener;
+import com.kevin.android.redorblack.messagereceiver.MessageReceiver;
+import com.kevin.android.redorblack.messagereceiver.MessagedReceivedListener;
 import com.kevin.android.redorblack.dataclasses.GameContainer;
 import com.kevin.android.redorblack.dataclasses.GameInfo;
 import com.kevin.android.redorblack.dataclasses.GameVariables;
-import com.kevin.android.redorblack.utility.Broadcaster;
 import com.kevin.android.redorblack.utility.Serializer;
 
 import org.junit.Test;
@@ -20,12 +18,11 @@ import java.io.IOException;
 
 import static com.kevin.android.redorblack.constants.GameConstants.CHANGED_COLOR;
 import static com.kevin.android.redorblack.constants.GameConstants.CHANGED_GAME_INFO;
-import static com.kevin.android.redorblack.constants.GameConstants.CHANGED_IWANTTOCONTINUE;
+import static com.kevin.android.redorblack.constants.GameConstants.CHANGED_I_WANT_TO_CONTINUE;
 import static com.kevin.android.redorblack.constants.GameConstants.CHANGED_WHO_GOES_FIRST;
 import static com.kevin.android.redorblack.constants.GameConstants.CHANGED_WHO_IS_PAYING;
 import static com.kevin.android.redorblack.constants.GameConstants.I_AM_PAYING;
 import static com.kevin.android.redorblack.constants.GameConstants.NO_CHOICE_RECEIVED;
-import static com.kevin.android.redorblack.constants.GameConstants.NO_ONE_PAYING;
 import static com.kevin.android.redorblack.constants.GameConstants.OPPONENT_PAYING;
 import static com.kevin.android.redorblack.constants.GameConstants.RED;
 import static com.kevin.android.redorblack.utility.GameContainerConverter.*;
@@ -42,6 +39,8 @@ MessageReceiver messageReceiver;
 GameContainer gameContainer;
 GameInfo gameInfo;
 */
+
+/*
 @Test
  public void testMessages(){
     MessageReceiver messageReceiver; messageReceiver = new MessageReceiver(messagedReceivedListener);
@@ -50,16 +49,16 @@ GameInfo gameInfo;
 
     gameVariables.setMyChoice(RED);
     gameVariables.setPayingForGameContinue(I_AM_PAYING);
-    gameVariables.setFirstToPick(false);
+   // gameVariables.setFirstToPick(false);
     gameVariables.setOpponentWantsToContinue(true);
 
     assertNotNull(sendGameContainer(gameVariables, CHANGED_COLOR));
 
-    messageReceiver.incomingMessage(sendGameContainer(gameVariables, CHANGED_COLOR));
-    messageReceiver.incomingMessage(sendGameContainer(gameVariables, CHANGED_IWANTTOCONTINUE));
-    messageReceiver.incomingMessage(sendGameContainer(gameVariables, CHANGED_GAME_INFO));
-    messageReceiver.incomingMessage(sendGameContainer(gameVariables, CHANGED_WHO_GOES_FIRST));
-    messageReceiver.incomingMessage(sendGameContainer(gameVariables, CHANGED_WHO_IS_PAYING));
+    messageReceiver.validateIncomingMessage(sendGameContainer(gameVariables, CHANGED_COLOR));
+    messageReceiver.validateIncomingMessage(sendGameContainer(gameVariables, CHANGED_I_WANT_TO_CONTINUE));
+    messageReceiver.validateIncomingMessage(sendGameContainer(gameVariables, CHANGED_GAME_INFO));
+    messageReceiver.validateIncomingMessage(sendGameContainer(gameVariables, CHANGED_WHO_GOES_FIRST));
+    messageReceiver.validateIncomingMessage(sendGameContainer(gameVariables, CHANGED_WHO_IS_PAYING));
 
 
 }
@@ -86,11 +85,11 @@ public void testObjects(){
     try {
         bytes = Serializer.convertToBytes(gameContainer);
         assertNotNull(bytes);
-            /*
+
             assertTrue(isValidMessage(bytes));
             if (isValidMessage(bytes)){
                 return bytes;
-            } */
+            }
         gameContainer = (GameContainer) Serializer.convertFromBytes(bytes);
         assertNotNull(gameContainer);
         assertEquals(CHANGED_COLOR, gameContainer.getSendingCode());
@@ -123,25 +122,19 @@ public void testObjects(){
                 // recoverButtons()
             }
         }
-        @Override
-        public void onOpponentWantsToContinueReceived(boolean opponentWantsToContinue) {
-            gameVariables.setOpponentWantsToContinue(opponentWantsToContinue);
-        }
+
+      @Override
+      public void onOpponentWantsToContinueReceived(int paying) {
+                  if (paying == I_AM_PAYING){
+                      gameVariables.setPayingForGameContinue(OPPONENT_PAYING);
+                  }
+          assertEquals(OPPONENT_PAYING, gameVariables.getPayingForGameContinue());
+      }
 
         @Override
         public void onGameInfoReceived(GameInfo gameInfo) {
          //   receiveGameInfoAndJoinRoom(gameInfo);
             assertEquals("room1", gameInfo.getRoomId());
-        }
-
-        @Override
-        public void onWhoIsPayingReceived(int paying) {
-            if (paying == I_AM_PAYING){
-                gameVariables.setPayingForGameContinue(OPPONENT_PAYING);
-            } else if (paying == NO_ONE_PAYING){
-                gameVariables.setPayingForGameContinue(paying);
-            }
-            assertEquals(OPPONENT_PAYING, gameVariables.getPayingForGameContinue());
         }
     };
 
@@ -154,7 +147,7 @@ MessageReceiver messageReceiver = new MessageReceiver(messagedReceivedListener);
 assertNotNull(sendGameContainer(gameVariables, CHANGED_COLOR));
 assertNotNull(messageReceiver);
 assertNotNull(messagedReceivedListener);
-messageReceiver.incomingMessage(sendGameContainer(gameVariables, CHANGED_COLOR));
+messageReceiver.validateIncomingMessage(sendGameContainer(gameVariables, CHANGED_COLOR));
 
 }
 
@@ -170,7 +163,7 @@ messageReceiver.incomingMessage(sendGameContainer(gameVariables, CHANGED_COLOR))
             assertTrue(isValidMessage(bytes));
             if (isValidMessage(bytes)){
                 return bytes;
-            } */
+            }
         } catch (IOException io) {
             Log.v("Broadcaster", "IO EXCEPTION, " + io.toString());
         }
@@ -189,6 +182,6 @@ messageReceiver.incomingMessage(sendGameContainer(gameVariables, CHANGED_COLOR))
         }
         return false;
     }
-
+*/
 
 }

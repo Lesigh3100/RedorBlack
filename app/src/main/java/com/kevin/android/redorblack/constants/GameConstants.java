@@ -13,34 +13,26 @@ public class GameConstants {
     public final static int NO_CHOICE_RECEIVED = -1;
     public final static int NEW_USER_FREE_STARTING_TOKENS = 10;
     public final static int USER_MAX_FREE_TOKENS = 5;
-    public final static int FREE_TOKEN_REFRESH_TIME_SECONDS = 180;
+    public final static int FREE_TOKEN_REFRESH_TIME_SECONDS = 300;
     public final static int FREE_TOKEN_REFRESH_TIME_MILLIS = FREE_TOKEN_REFRESH_TIME_SECONDS * 1000;
-    public final static int FREE_TOKEN = 9;
-    public final static int PAID_TOKEN = 8;
+    public final static int FREE_TICKET = 9;
+    public final static int PAID_TICKET = 8;
     public final static int NEED_TO_PURCHASE_TOKENS = 11;
     public final static int I_AM_PAYING = 12;
     public final static int OPPONENT_PAYING = 13;
     public final static int NO_ONE_PAYING = -11;
 
 
-    // char codes for broadcast
-
+    // sending codes for broadcasting
     public final static int CHANGED_COLOR = 51;
-    public final static int CHANGED_IWANTTOCONTINUE = 52;
+    public final static int CHANGED_I_WANT_TO_CONTINUE = 52;
     public final static int CHANGED_WHO_IS_PAYING = 53;
     public final static int CHANGED_WHO_GOES_FIRST = 54;
     public final static int CHANGED_GAME_INFO = 55;
 
-    public final static int GAME_CONTINUE_CODE = 3;
-    public final static int GAME_DO_NOT_CONTINUE_CODE = 5;
-    public final static char COLOR_CHOICE = 'C';
-    public final static char NO_CHOICE = 'N';
-    public final static char RED_CHOSEN = 'R';
-    public final static char BLACK_CHOSEN = 'B';
-    public final static char PICKING = 'I';
-    public final static char I_AM_PICKING = 'M';
-    public final static char YOU_ARE_PICKING = 'U';
-    public final static char CONTINUE_THE_GAME = 'P';
+    public final static int PLAYER_ONE_FIRST = 144;
+    public final static int PLAYER_TWO_FIRST = 155;
+
 
 
     // code for exception

@@ -9,22 +9,64 @@ import static com.kevin.android.redorblack.constants.GameConstants.NO_ONE_PAYING
 @Keep
 public class GameContainer implements Serializable {
 
-    Player player1;
-    Player player2;
+   // Player player1;
+ //   Player player2;
     GameInfo gameInfo;
-    int sendingCode;
+    public int sendingCode;
+    public int changedCode;
 
+    public GameContainer(GameInfo gameInfo, int sendingCode) {
+        this.gameInfo = gameInfo;
+        this.sendingCode = sendingCode;
+    }
+
+    public GameContainer(int sendingCode, int changedCode) {
+        this.sendingCode = sendingCode;
+        this.changedCode = changedCode;
+    }
+
+    public void setGameInfo(GameInfo gameInfo) {
+        this.gameInfo = gameInfo;
+    }
+
+    public int getChangedCode() {
+        return changedCode;
+    }
+
+    public void setChangedCode(int changedCode) {
+        this.changedCode = changedCode;
+    }
+
+    public GameInfo getGameInfo() {
+        return gameInfo;
+    }
+
+
+    public int getSendingCode() {
+        return sendingCode;
+    }
+
+    public void setSendingCode(int sendingCode) {
+        this.sendingCode = sendingCode;
+    }
+
+
+
+    /*
     public GameContainer(GameInfo gameInfo) {
         this.player1 = new Player();
         this.player2 = new Player();
         this.gameInfo = gameInfo;
-    }
-
+    } */
+/*
     public GameContainer() {
         this.player1 = new Player();
         this.player2 = new Player();
     }
+*/
 
+
+    /*
     public Player getPlayer1() {
         return player1;
     }
@@ -40,23 +82,9 @@ public class GameContainer implements Serializable {
     public void setPlayer2(Player player2) {
         this.player2 = player2;
     }
+    */
 
-    public GameInfo getGameInfo() {
-        return gameInfo;
-    }
-
-    public void setGameInfo(GameInfo gameInfo) {
-        this.gameInfo = gameInfo;
-    }
-
-    public int getSendingCode() {
-        return sendingCode;
-    }
-
-    public void setSendingCode(int sendingCode) {
-        this.sendingCode = sendingCode;
-    }
-
+    /*
     public class Player implements Serializable {
         private boolean iWantToContinue;
         private int myChoice;
@@ -102,5 +130,5 @@ public class GameContainer implements Serializable {
         public void setPayingForGameContinue(int payingForGameContinue) {
             this.payingForGameContinue = payingForGameContinue;
         }
-    }
+    } */
 }

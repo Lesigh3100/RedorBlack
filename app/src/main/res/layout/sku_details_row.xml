@@ -58,7 +58,6 @@
             <TextView
                 android:id="@+id/description"
                 android:layout_marginStart="@dimen/single_padding"
-                android:layout_marginLeft="@dimen/single_padding"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sku_details_row_description_text_size"

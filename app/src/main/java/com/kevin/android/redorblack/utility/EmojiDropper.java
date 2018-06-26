@@ -67,7 +67,8 @@ public void losingEmojiDrop(){
        win26(R.drawable.emoji_win26);
        
        private int imageId;
-       private WinningEmojis (int drawableId){
+
+       WinningEmojis (int drawableId){
            this.imageId = drawableId;
        }
        public static WinningEmojis getRandomEmoji(){
@@ -99,7 +100,7 @@ public void losingEmojiDrop(){
        lose20(R.drawable.emoji_lose20),
        lose21(R.drawable.emoji_lose21);
        private int imageId;
-       private LosingEmojis (int drawableId){
+       LosingEmojis (int drawableId){
            this.imageId = drawableId;
        }
        public static LosingEmojis getRandomEmoji(){

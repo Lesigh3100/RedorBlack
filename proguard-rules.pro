@@ -13,6 +13,8 @@
 #}
 -keep class org.webrtc.** { *; }
 -keep class com.twilio.video.** { *; }
+-keep class com.firebase.** { *; }
+-keep class org.apache.** { *; }
 -keepattributes InnerClasses
 # Uncomment this to preserve the line number information for
 # debugging stack traces.

@@ -22,11 +22,7 @@ public class SoundEffects {
    String TAG = "SOUND EFFECTS ";
 
    // enum for volume levels to be passed into our play method for easy control of volume
-   public enum VolumeLevel {
-       VOLUME_LOUD,
-       VOLUME_MEDIUM,
-       VOLUME_QUIET
-   }
+
 
    public void endGameSound(Boolean win){
        int random = (int)(Math.random()*3) + 1;

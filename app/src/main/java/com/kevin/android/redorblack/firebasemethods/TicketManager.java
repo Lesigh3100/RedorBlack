@@ -1,9 +1,8 @@
 package com.kevin.android.redorblack.firebasemethods;
 
-import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.Keep;
-import android.widget.TextView;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -11,6 +10,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.kevin.android.redorblack.dataclasses.User;
+import com.kevin.android.redorblack.uicontrols.UIListener;
 import com.kevin.android.redorblack.utility.ServerTime;
 import com.kevin.android.redorblack.utility.Utility;
 
@@ -19,47 +20,54 @@ import static com.kevin.android.redorblack.constants.FirebaseConstants.*;
 @Keep
 public class TicketManager {
 
+    private final String TAG = "Ticketmanager";
     private int tokensBeingAdded;
     private int secondsUntilFreeToken;
     private DatabaseReference userRef;
     private ServerTime serverTime;
-    public Context context;
-    private TextView freeTokenCountdownClock;
+
 
     private int currentFreeTokensInternal;
     private int currentPaidTokensInternal;
-    private Object timeTokenUsedInternal;
+  //  private Object timeTokenUsedInternal;
+    private long timeTokenUsedInternal;
+    private UIListener uiListener;
 
-    public TicketManager(Context context, DatabaseReference userRef, TextView freeTokenCountdownClock) {
+    public TicketManager(DatabaseReference userRef, UIListener uiListener) {
         this.userRef = userRef;
-        this.context = context;
-        this.freeTokenCountdownClock = freeTokenCountdownClock;
         serverTime = new ServerTime(userRef);
+        this.uiListener = uiListener;
     }
 
-    public int getCurrentFreeTokensInternal() {
-        return currentFreeTokensInternal;
+    /*
+    public void setInternals(int currentFreeTokensInternal, int currentPaidTokensInternal, Object timeTokenUsedInternal){
+    this.currentFreeTokensInternal = currentFreeTokensInternal;
+    this.currentPaidTokensInternal = currentPaidTokensInternal;
+    this.timeTokenUsedInternal = timeTokenUsedInternal;
+    } */
+
+    public void setInternals(int currentFreeTokensInternal, int currentPaidTokensInternal, long timeTokenUsedInternal){
+        this.currentFreeTokensInternal = currentFreeTokensInternal;
+        this.currentPaidTokensInternal = currentPaidTokensInternal;
+        this.timeTokenUsedInternal = timeTokenUsedInternal;
     }
 
     public void setCurrentFreeTokensInternal(int currentFreeTokensInternal) {
         this.currentFreeTokensInternal = currentFreeTokensInternal;
     }
 
-    public Object getTimeTokenUsedInternal() {
-        return timeTokenUsedInternal;
-    }
-
-    public void setTimeTokenUsedInternal(Object timeTokenUsedInternal) {
-        this.timeTokenUsedInternal = timeTokenUsedInternal;
-    }
-
-    public int getCurrentPaidTokensInternal() {
-        return currentPaidTokensInternal;
-    }
-
     public void setCurrentPaidTokensInternal(int currentPaidTokensInternal) {
         this.currentPaidTokensInternal = currentPaidTokensInternal;
     }
+
+    public void setTimeTokenUsedInternal(long timeTokenUsedInternal) {
+        this.timeTokenUsedInternal = timeTokenUsedInternal;
+    }
+
+    /*
+    public void setTimeTokenUsedInternal(Object timeTokenUsedInternal) {
+        this.timeTokenUsedInternal = timeTokenUsedInternal;
+    } */
 
     // start process of subtracting a paid token from the User
     public void subtractFreeTokenFromUser(){
@@ -71,6 +79,7 @@ public class TicketManager {
     }
 
     public void checkIfWeNeedToStartTimer(){
+        Log.d(TAG, "checkIfweneedtostarttimer called");
         tokenUpdater(CODE_CHECK_IF_WE_NEED_TO_START_OR_CONTINUE_TIMER, CODE_NEED_TIME_STAMP, CODE_TOKEN_MATH_IRRELEVANT);
     }
 
@@ -127,15 +136,17 @@ public class TicketManager {
                 break;
             case CODE_TOKEN_MATH_IRRELEVANT:
                 if (tokensLessThanMax()){
-                    if (timestamp >= (long)timeTokenUsedInternal){
+                    Log.d(TAG, "tokens math irrelevant, tokens less than max is true");
+                    if (timestamp <= timeTokenUsedInternal){
+                        Log.d(TAG, "add free tokens");
                         tokenUpdater(CODE_ADD_FREE_TOKENS, timestamp, CODE_TOKEN_MATH_IRRELEVANT);
                     } else {
-                        tokenUpdater(CODE_RESTART_CLOCK, (long)timeTokenUsedInternal, CODE_TOKEN_MATH_IRRELEVANT);
+                        Log.d(TAG, "restart clock");
+                        tokenUpdater(CODE_RESTART_CLOCK, timeTokenUsedInternal, CODE_TOKEN_MATH_IRRELEVANT);
                     }
                 }
                 break;
             default:
-                // something went wrong
                 break;
         }
     }
@@ -188,7 +199,7 @@ public class TicketManager {
         userRef.child(TIME_TOKEN_USED_REFERENCE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                timeTokenUsedInternal = dataSnapshot.getValue();
+                timeTokenUsedInternal = (long)dataSnapshot.getValue();
                 tokenUpdater(CODE_RESTART_CLOCK, timestamp, CODE_TOKEN_MATH_IRRELEVANT);
             }
 
@@ -204,7 +215,7 @@ public class TicketManager {
         if (currentFreeTokensInternal >= USER_MAX_FREE_TOKENS) {
             return;
         }
-        final long timeLastTokenUsed = (long) timeTokenUsedInternal;
+        final long timeLastTokenUsed = timeTokenUsedInternal;
         if (timestamp >= timeLastTokenUsed + FREE_TOKEN_REFRESH_TIME_MILLIS) {
             userRef.child(FREE_TICKET_REFERENCE).runTransaction(new Transaction.Handler() {
                 @Override
@@ -325,15 +336,14 @@ public class TicketManager {
     }
 
     // handles counting down the time until player gets another free token
-    public void startFreeTokenCountDown(int timeToRun) {
+    private void startFreeTokenCountDown(int timeToRun) {
         secondsUntilFreeToken = timeToRun;
         final Handler h = new Handler();
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (secondsUntilFreeToken <= 0) {
-                    // callback here when timer is finished
-                    freeTokenCountdownClock.setText("");
+                    uiListener.onFreeTokenCountDownTextUpdate(secondsUntilFreeToken);
                     tokenUpdater(CODE_CLOCK_TIME_RAN_OUT, CODE_NEED_TIME_STAMP, CODE_TOKEN_MATH_IRRELEVANT);
                     return;
                 }
@@ -348,7 +358,7 @@ public class TicketManager {
             --secondsUntilFreeToken;
         }
         //   Log.d("FREE TOKEN COUNTER","TIME = " + Integer.toString(secondsUntilFreeToken));
-        freeTokenCountdownClock.setText(Integer.toString(secondsUntilFreeToken));
+        uiListener.onFreeTokenCountDownTextUpdate(secondsUntilFreeToken);
     }
 
 

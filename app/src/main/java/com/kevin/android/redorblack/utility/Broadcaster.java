@@ -37,8 +37,8 @@ public class Broadcaster {
         }
 
 
-    public static byte[] sendGameContainer(GameVariables gameVariables, int changedCode){
-      GameContainer container = createContainerToSend(gameVariables, changedCode);
+    public static byte[] sendGameContainer(int changedCode, int changedInformation){
+      GameContainer container = createContainerToSend(changedCode, changedInformation);
         try {
             byte[] bytes = Serializer.convertToBytes(container);
             if (isValidMessage(bytes)){
@@ -52,9 +52,9 @@ public class Broadcaster {
 
 
     // sends the string of my room ID so that the other person can generate a token for it
-    public static byte[] sendMyRoom(String room, String roomFBReference, Object timestamp, int changedCode, GameVariables gameVariables) {
+    public static byte[] sendMyRoom(String room, String roomFBReference, Object timestamp, int changedCode) {
         GameInfo gameInfo = new GameInfo(room, roomFBReference, timestamp);
-        GameContainer container = createContainerToSendRoom(gameVariables, gameInfo, changedCode);
+        GameContainer container = createContainerToSendRoom(gameInfo, changedCode);
         try {
             byte[] bytes = Serializer.convertToBytes(container);
             if (isValidMessage(bytes)){
